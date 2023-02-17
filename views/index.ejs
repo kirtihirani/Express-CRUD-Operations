@@ -1,0 +1,39 @@
+<!--include header-->
+    <%- include('include/_header') %>
+
+<!-- /include header -->
+
+<!-- main section -->
+
+<div class="container">
+    <a href="/add-user" type="button" class="btn btn-outline-dark btn-lg my-5">+ Add User</a>
+    <form action="/" method="POST">  
+
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col">Role</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+            <%- include('include/_show')%>
+          
+        </tbody>
+      </table>
+      </form>
+      
+</div>
+
+<!-- /main section -->
+
+
+<!--include footer-->
+    <%- include('include/_footer') %>
+
+<!-- /include footer -->
