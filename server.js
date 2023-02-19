@@ -7,6 +7,9 @@ const path = require('path');
 const connectDB = require('./server/database/connection')
 const dotenv = require("dotenv");
 
+
+
+
 dotenv.config({path:'config.env'});
 const PORT = process.env.PORT || 8080
 
@@ -18,6 +21,7 @@ connectDB();
 
 //parse request to body parser
 app.use(bodyparser.urlencoded({extended:true}))
+app.use(bodyparser.json())
 
 //set view engine
 app.set("view engine","ejs")

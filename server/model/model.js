@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
 
+const fastestValidator = require('fastest-validator')
+
+const v = new fastestValidator()
+
 var schema = new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:true,
+        min:5,
+        max:100
     },
     email:{
         type:String,
@@ -13,6 +19,7 @@ var schema = new mongoose.Schema({
     password:{
         type:String,
         required:true,
+        min:5
         
     },
     role:String

@@ -1,30 +1,48 @@
+const { schema } = require('../model/model');
+const {validationResult} = require('express-validator')
 var Userdb = require('../model/model');
+const { add_user } = require('../services/render');
 
 //create and save new user
+
 exports.create = (req,res)=>{
     if(!req.body){
         res.status(400).send({message:"Content can not be empty"});
         return;
     }
-
-    const user = new Userdb({
-        name:req.body.name,
-        email:req.body.email,
-        password:req.body.password,
-        role:req.body.role
-    })
-
-    //save user in database
-    user
-        .save(user)
-        .then(data=>{
-            res.send(data)
-        })
-        .catch(err=>{
-            res.status(500).send({
-                message:err.message || "some error occured with create operation"
-            });
-        });
+    else{
+        const errors = validationResult(req)
+        if(errors.isEmpty()){
+            const user = new Userdb({
+                name:req.body.name,
+                email:req.body.email,
+                password:req.body.password,
+                role:req.body.role
+            })
+            //save user in database
+           
+            user
+                .save(user)
+                .then(data=>{
+                    //res.send(data)
+                    
+                    res.redirect('/')
+                })
+                .catch(err=>{
+                    
+                    res.status(500).send({
+                        
+                        message:err.message || "some error occured with create operation"
+                    });
+                    
+                });
+        }
+        else{
+            const alert = errors.array()
+            res.render('add_user',{alert})
+        }
+    }
+     
 }
 
 //retrieve and return all users
@@ -40,38 +58,31 @@ exports.find = (req,res)=>{
 
 //update a new identified user by userid
 exports.update = (req,res)=>{
-    if(!req.body){
-        return res
-                .status(400)
-                .send({message:"data to update cannot be empty"})
-    }
-
-    const id = req.params.id;
-    Userdb.findByIdAndUpdate(id,req.body,{useFindAndModify:false})
-    .then(data=>{
-        if(!data){{
-            res.status(404).send({message:`cannot update user with ${id}. Maybe user not found!`})
-        }}else{
-            res.send(data)
+    Userdb.findByIdAndUpdate({_id:req.params.id},req.body,(err,docs)=>{
+        if(err){
+            console.log("error occured")
+        }
+        else{
+            res.redirect('/')
         }
     })
     
-    .catch(err=>{
-        res.status(500).send({message:"error updating user info"})
-    })
+
 }
 
 //delete a user with specified id
 exports.delete = (req,res)=>{
     const id = req.params.id;
-    Userdb.findByIdAndDelete(id)
-    .then(data=>{
-        if(!data){
-            {res.status(404).send({message:`cannot delete user with id ${id}`})}
-        }else{
-            res.send("user deleted")
+    console.log(id)
+    Userdb.findByIdAndDelete({_id:req.params.id},req.body,(err,docs)=>{
+        if(err){
+            console.log("cannot delete")
+        }
+        else{
+            res.redirect('/')
         }
     })
+    
     
 }
 
