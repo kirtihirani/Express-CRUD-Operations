@@ -35,7 +35,7 @@ app.use('/js',express.static(path.resolve(__dirname,"assets/js")))
 
 app.use('/user',require('./server/routes/userRouter'))
 app.use('/book',require('./server/routes/bookRouter'))
-
+app.use('/',require('./server/routes/auth'))
 
 app.listen(PORT, ()=>{
     console.log(`server is running on ${PORT}`)

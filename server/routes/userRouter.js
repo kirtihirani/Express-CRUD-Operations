@@ -2,7 +2,9 @@ const express = require('express');
 const route = express.Router()
 const services = require('../services/render');
 const controller = require('../controller/userController');
-const {check, validationResult}= require('express-validator')
+const {check, validationResult}= require('express-validator');
+const authenticate = require('../middleware/authenticate')
+
 /**
  * @description Root Route
  * @method GET /
@@ -29,7 +31,7 @@ route.get('/delete-user/:id',controller.delete)
 route.post('/update-user/:id',controller.update)
 
 //API
-route.post('/api/users',[
+route.post('/api/users',authenticate,[
     check('name','name must be 3+ characters long')
     .exists()
     .isLength({min:3}),
@@ -37,9 +39,9 @@ route.post('/api/users',[
     .isLength({min:4})
 ]
 ,controller.create);
-route.delete('/api/users/:id',controller.delete);
-route.get('/api/users',controller.find);
-route.post('/api/users/:id',controller.update);
-route.get('/api/users/:id',controller.findUser);
+route.delete('/api/users/:id',authenticate,controller.delete);
+route.get('/api/users',authenticate,controller.find);
+route.post('/api/users/:id',authenticate,controller.update);
+route.get('/api/users/:id',authenticate,controller.findUser);
 
 module.exports = route
