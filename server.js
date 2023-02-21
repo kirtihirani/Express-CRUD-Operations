@@ -33,7 +33,8 @@ app.use('/js',express.static(path.resolve(__dirname,"assets/js")))
 
 //load routers
 
-app.use('/',require('./server/routes/router'))
+app.use('/user',require('./server/routes/userRouter'))
+app.use('/book',require('./server/routes/bookRouter'))
 
 
 app.listen(PORT, ()=>{

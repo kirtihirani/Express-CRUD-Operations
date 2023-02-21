@@ -1,7 +1,7 @@
 const express = require('express');
 const route = express.Router()
 const services = require('../services/render');
-const controller = require('../controller/controller');
+const controller = require('../controller/userController');
 const {check, validationResult}= require('express-validator')
 /**
  * @description Root Route

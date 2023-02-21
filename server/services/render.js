@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { Router } = require('express');
 //const {alert}= require('../controller/controller')
-const User = require('../model/model')
+const User = require('../model/user')
 
 exports.homeRoutes = (req,res)=>{
     //make a get request to API users

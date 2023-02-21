@@ -1,6 +1,6 @@
-const { schema } = require('../model/model');
+const { schema } = require('../model/user');
 const {validationResult} = require('express-validator')
-var Userdb = require('../model/model');
+var Userdb = require('../model/user');
 const { add_user } = require('../services/render');
 
 //create and save new user
@@ -39,6 +39,7 @@ exports.create = (req,res)=>{
         }
         else{
             const alert = errors.array()
+            res.send(alert)
             res.render('add_user',{alert})
         }
     }
@@ -63,6 +64,7 @@ exports.update = (req,res)=>{
             console.log("error occured")
         }
         else{
+            res.send(docs)
             res.redirect('/')
         }
     })
@@ -79,6 +81,7 @@ exports.delete = (req,res)=>{
             console.log("cannot delete")
         }
         else{
+            res.send('User deleted')
             res.redirect('/')
         }
     })
